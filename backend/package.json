@@ -24,6 +24,7 @@
     "nodemon": "^3.0.1",
     "path": "^0.12.7",
     "sequelize": "^6.33.0",
+    "socket.io": "^4.7.2",
     "tedious": "^16.4.0"
   }
 }

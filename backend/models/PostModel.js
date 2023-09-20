@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import db from "../config/connect.js";
+import Users from "./UserModel.js";
 
 const { DataTypes } = Sequelize;
 
@@ -22,5 +23,8 @@ const Post = db.define(
     freezeTableName: true,
   }
 );
+
+Post.hasOne(Users);
+Post.belongsTo(Users);
 
 export default Post;

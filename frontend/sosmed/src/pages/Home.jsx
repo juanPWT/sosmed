@@ -5,16 +5,16 @@ import Beranda from "../component/container/Beranda";
 function Home() {
   return (
     <>
-      <div className="flex flex-col justify-between h-screen">
-        <div>
+      <div className="flex flex-col min-h-screen ">
+        <div className="fixed top-0 z-50">
           <Navbar />
         </div>
 
-        <div className="mt-12">
+        <div className="mt-5 z-0">
           <Beranda />
         </div>
 
-        <div>
+        <div className="mt-auto">
           <Footer />
         </div>
       </div>

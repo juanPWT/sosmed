@@ -1,14 +1,18 @@
 import Post from "../models/PostModel.js";
+import Users from "../models/UserModel.js";
 import response from "../utils/response.js";
 
 export const uploadStatus = async (req, res) => {
   const { userId } = req.params;
   const { status } = req.body;
 
-  if (!userId) return response(400, "failed", "user id not found!!!", res);
+  const idclient = await Users.findByPk(userId);
+  if (idclient === null)
+    return response(400, "failed", "user id not found", res);
 
   if (!status)
     return response(400, "failed", "status must be filled in !!!", res);
+
   try {
     const post = await Post.create({
       userId: userId,
@@ -38,5 +42,16 @@ export const getStatusByUserId = async (req, res) => {
     response(200, post, "success GET data by user id ", res);
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getAllStatus = async (req, res) => {
+  try {
+    const post = await Post.findAll({
+      include: Users,
+    });
+    response(200, post, "suscces get all data status!!!", res);
+  } catch (err) {
+    console.log(err);
   }
 };
