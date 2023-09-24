@@ -1,21 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-const StatusCard = () => {
-  const [status, setStatus] = useState([]);
-
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/status");
-        setStatus(response.data.payload.datas);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchStatus();
-  }, []);
-
+const StatusCard = ({ status }) => {
   return (
     <div className="">
       {status.map((data) => {
