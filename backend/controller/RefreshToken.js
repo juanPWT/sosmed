@@ -33,7 +33,7 @@ export const tokenRefresh = async (req, res) => {
           { userId, username, email },
           process.env.ACCESS_TOKEN_SECRET,
           {
-            expiresIn: "30s",
+            expiresIn: "15s",
           }
         );
         response(200, { acccessTokken }, "success GET refresh tokken", res);

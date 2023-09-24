@@ -44,6 +44,7 @@ export const login = async (req, res) => {
         email: req.body.email,
       },
     });
+
     const match = await bcrypt.compare(req.body.password, users[0].password);
     if (!match) {
       return response(400, "bad request", "wrong password!!!", res);
@@ -79,7 +80,7 @@ export const login = async (req, res) => {
     });
     response(200, { accessToken }, "success GET Token jwt", res);
   } catch (error) {
-    response(400, "bad request", "Email not found!", res);
+    response(400, "bad request", "email account not register yet!!!", res);
   }
 };
 

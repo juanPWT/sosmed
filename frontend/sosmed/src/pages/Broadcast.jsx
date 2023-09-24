@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
-import ConBroadcast from "../component/container/ConBroadcast";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
+import ConBroadcast from "../component/broadcast/ConBroadcast";
 
 const Broadcast = () => {
+  const [token, setToken] = useState("");
+  const [profil, setProfil] = useState({
+    username: "",
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:3001/users/token");
+        setToken(res.data.payload.datas.acccessTokken);
+        const decode = jwtDecode(res.data.payload.datas.acccessTokken);
+        setProfil({ username: decode.username });
+      } catch (err) {}
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
       <div className="flex flex-col min-h-screen justify-between">
         <div className="fixed top-0 z-50">
-          <Navbar />
+          <Navbar username={profil.username} />
         </div>
         <div className="z-0">
           <ConBroadcast />

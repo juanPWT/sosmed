@@ -1,5 +1,5 @@
 const response = (statusCode, data, messege, res) => {
-  res.json({
+  res.status(statusCode).json({
     payload: {
       status_code: statusCode,
       datas: data,
