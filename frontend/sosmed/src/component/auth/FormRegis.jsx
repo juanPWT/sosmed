@@ -12,7 +12,16 @@ const FormRegis = ({ setIsLoading, setView, toast }) => {
     //init
     try {
       const res = await axios.post("http://localhost:3001/users", values);
-      toast.success("success resgister account");
+      toast.success("success resgister account", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       setView("sign-in");
     } catch (err) {
       console.log(err);

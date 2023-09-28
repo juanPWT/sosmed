@@ -29,14 +29,14 @@ export const tokenRefresh = async (req, res) => {
         const username = users[0].username;
         const email = users[0].email;
 
-        const acccessTokken = jwt.sign(
+        const accessTokken = jwt.sign(
           { userId, username, email },
           process.env.ACCESS_TOKEN_SECRET,
           {
             expiresIn: "15s",
           }
         );
-        response(200, { acccessTokken }, "success GET refresh tokken", res);
+        response(200, { accessTokken }, "success GET refresh tokken", res);
       }
     );
   } catch (error) {

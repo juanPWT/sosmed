@@ -3,6 +3,7 @@ import response from "../utils/response.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+//redy
 export const getUsers = async (req, res) => {
   try {
     const users = await Users.findAll({
@@ -110,3 +111,47 @@ export const logout = async (req, res) => {
   res.clearCookie("refreshToken");
   return response(200, "success", "success logout!", res);
 };
+
+export const getUserById = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await Users.findByPk(userId, {
+      attributes: ["username", "email"],
+    });
+    if (user === null) return response(404, null, "user id ny found", res);
+    response(200, user, "success gets user by id", res);
+  } catch (error) {
+    response(500, null, "server failed !!! get user by id", res);
+  }
+};
+
+export const update = async (req, res) => {
+  const { userId } = req.params;
+  const validate = await Users.findByPk(userId);
+  if (validate === null) return response(404, null, "user id bot found!!", res);
+
+  const { username, email } = req.body;
+  if (!username && !email)
+    return response(404, null, "attributes required!!", res);
+
+  try {
+    const user = await Users.update(
+      { username: username, email: email },
+      {
+        where: {
+          id: userId,
+        },
+      }
+    );
+    if (!user) return response(500, null, "failed to update user!!", res);
+    const res2 = {
+      statusQuery: user,
+    };
+    response(200, res2, "success update users", res);
+  } catch (error) {
+    response(500, null, "server failed !! cant update user", res);
+  }
+};
+
+//development

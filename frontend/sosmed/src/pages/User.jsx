@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
-import Footer from "../component/Footer";
+import React, { useEffect, useState } from "react";
+import ConUser from "../component/user_setting/conUser";
 import Navbar from "../component/Navbar";
-import Beranda from "../component/beranda/Beranda";
-import axios from "axios";
+import Footer from "../component/Footer";
 import jwt from "jwt-decode";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "react-toastify/dist/ReactToastify.min.css";
 
-function Home() {
+const User = () => {
   const [token, setToken] = useState("");
   const [profil, setProfil] = useState({
     userId: "",
@@ -31,8 +28,8 @@ function Home() {
         email: decode.email,
       });
       setExp(decode.exp);
-    } catch (err) {
-      if (err) {
+    } catch (error) {
+      if (error) {
         navigate("/auth");
       }
     }
@@ -70,28 +67,24 @@ function Home() {
 
   return (
     <>
-      <ToastContainer />
-      <div className="flex flex-col min-h-screen ">
+      <div className="flex flex-col min-h-screen">
         <div className="fixed top-0 z-50">
           <Navbar username={profil.username} />
         </div>
-
         <div className="mt-5 z-0">
-          <Beranda
-            token={token}
-            axiosJWT={axiosJWT}
+          <ConUser
             username={profil.username}
+            token={token}
             userId={profil.userId}
-            toast={toast}
+            axiosJWT={axiosJWT}
           />
         </div>
-
         <div className="mt-auto">
           <Footer />
         </div>
       </div>
     </>
   );
-}
+};
 
-export default Home;
+export default User;

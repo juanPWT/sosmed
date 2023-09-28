@@ -9,7 +9,7 @@ import { verifyLogin } from "../middleware/tokenVerify.js";
 const route = express.Router();
 
 route.get("/", verifyLogin, getAllStatus);
-route.get("/:userId", getStatusByUserId);
-route.post("/:userId", uploadStatus);
+route.get("/:userId", verifyLogin, getStatusByUserId);
+route.post("/:userId", verifyLogin, uploadStatus);
 
 export default route;

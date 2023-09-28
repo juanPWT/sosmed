@@ -16,7 +16,7 @@ const Broadcast = () => {
       try {
         const res = await axios.get("http://localhost:3001/users/token");
         setToken(res.data.payload.datas.acccessTokken);
-        const decode = jwtDecode(res.data.payload.datas.acccessTokken);
+        const decode = jwtDecode(res.data.payload.datas.accessTokken);
         setProfil({ username: decode.username });
       } catch (err) {}
     };

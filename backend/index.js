@@ -1,8 +1,8 @@
 //import space
 import express from "express";
-import db from "./config/connect.js";
-import UserRoute from "./route/UsersRoute.js";
-import PostRoute from "./route/PostRoute.js";
+import db from "./src/config/connect.js";
+import UserRoute from "./src/route/UsersRoute.js";
+import PostRoute from "./src/route/PostRoute.js";
 import dotEnv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";

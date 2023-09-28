@@ -17,7 +17,16 @@ const FormLogin = ({ setIsLoading, toast, setView }) => {
         navigate("/home");
       })
       .catch((error) => {
-        toast.error(error.response.data.payload.messege);
+        toast.error(error.response.data.payload.messege, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         if (
           error.response.data.payload.messege ===
           "email account not register yet!!!"

@@ -121,15 +121,13 @@ const Navbar = ({ username }) => {
                   tabIndex={0}
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
                 >
-                  <li>
+                  <li onClick={() => navigate("/user")}>
                     <a className="justify-between">
                       {username}
                       <div className="badge badge-accent">online</div>
                     </a>
                   </li>
-                  <li>
-                    <a>Settings</a>
-                  </li>
+
                   <li>
                     <button onClick={handleLogout}>Logout</button>
                   </li>

@@ -1,13 +1,19 @@
+import dayjs from "dayjs";
+
 const StatusCard = ({ status }) => {
   return (
     <div className="">
       {status.map((data) => {
+        const formatDate = dayjs(data.createdAt).format(
+          "(dddd) DD MMMM YYYY HH:mm a"
+        );
+
         return (
           <div
-            className="h-full rounded-lg border border-base-300 mx-10 overflow-hidden mb-10 shadow-lg md:h-80 relative"
+            className="h-full rounded-lg border border-base-300 mx-10 overflow-hidden mb-10 shadow-lg md:h-80 relative bg-white"
             key={data.id}
           >
-            <div className="flex bg-gray-100 h-16 ">
+            <div className="flex bg-white h-16 ">
               <img
                 src="./img/profil.png"
                 alt="frofil"
@@ -21,7 +27,7 @@ const StatusCard = ({ status }) => {
                   {data.user.username}
                 </h1>
                 <span className="mx-3 font-extralight text-xs text-gray-400 md:text-sm">
-                  {data.createdAt} - {data.user.email}
+                  {formatDate} - {data.user.email}
                 </span>
               </div>
               <div className="absolute right-2 hidden cursor-pointer sm:block">

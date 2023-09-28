@@ -12,40 +12,15 @@ const LoginRegis = () => {
   return (
     <>
       <div className="static flex justify-center items-center">
-        {/* success  */}
-        <ToastContainer
-          position="top-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-        {/* Same as */}
+        {/* toast  */}
         <ToastContainer />
-        {/* /error  */}
-        <ToastContainer
-          position="top-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
+
         <div
           className={`container flex  min-h-screen mx-auto ${
             isLoading ? "opacity-30" : ""
           }  `}
         >
-          <div className="flex flex-col h-[600px] w-[300px] sm:w-[500px] md:w-[600px] rounded-xl border border-gray-500 border-spacing-4 shadow-xl m-auto">
+          <div className="flex flex-col h-[600px] w-[300px] sm:w-[500px] md:w-[600px] rounded-xl border bg-white border-gray-500 border-spacing-4 shadow-xl m-auto">
             <div className="mx-auto mt-20 ">
               <button
                 onClick={() => setView("sign-in")}

@@ -38,6 +38,7 @@ export const getStatusByUserId = async (req, res) => {
       where: {
         userId: userId,
       },
+      include: Users,
     });
     response(200, post, "success GET data by user id ", res);
   } catch (error) {

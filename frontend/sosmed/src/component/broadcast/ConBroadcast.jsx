@@ -48,11 +48,14 @@ const ConBroadcast = () => {
         <h1 className="text-2xl md:text-5xl font-bold mt-10 mx-auto ">
           Welcome to sosmed Broadcast
         </h1>
-        <div className="h-[600px] w-[350px] sm:h-[900px] sm:w-[600px] md:w-[1000px] p-5 shadow-lg border border-gray-400 rounded-lg  mt-10 mx-auto ">
+        <div className="h-[600px] w-[350px] sm:h-[900px] sm:w-[600px] md:w-[1000px] p-5 shadow-lg border bg-white border-gray-400 rounded-lg  mt-10 mx-auto ">
           <div className={`chat chat-start m-4 `}>
             {messegeRecive.map((data, i) => {
               return (
-                <div key={i} className="chat-bubble mb-2">
+                <div
+                  key={i}
+                  className="chat-bubble mb-2 max-w-[400px] break-words"
+                >
                   {data}
                 </div>
               );
@@ -61,14 +64,17 @@ const ConBroadcast = () => {
           <div className={`chat chat-end m-4  `}>
             {myMessege.map((data, i) => {
               return (
-                <div key={i} className="chat-bubble mb-2">
+                <div
+                  key={i}
+                  className="chat-bubble mb-2 max-w-[400px] break-words"
+                >
                   {data}
                 </div>
               );
             })}
           </div>
         </div>
-        <div className="mb-10 mt-5 h-600 w-600 md:w-[1000px] border border-gray-400 mx-auto rounded-lg shadow-lg flex">
+        <div className="mb-10 mt-5 h-600 w-600 md:w-[1000px] border bg-white border-gray-400 mx-auto rounded-lg shadow-lg flex">
           <div className="mx-auto md:flex">
             <div className="form-control w-60 max-w-xs mx-10 my-5 md:my-10">
               <label className="label">

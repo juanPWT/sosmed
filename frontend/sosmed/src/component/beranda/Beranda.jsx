@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Tab } from "@headlessui/react";
-import StatusCard from "./StatusCard";
-import axios from "axios";
+import StatusCard from "./component/StatusCard";
+import MyStatus from "./MyStatus";
 
-const Beranda = ({ token, axiosJWT }) => {
+const Beranda = ({ token, axiosJWT, username, userId, toast }) => {
   const [status, setStatus] = useState([]);
+  const [StatusPrivate, setStatusPrivate] = useState([]);
+  const [postStatus, setPostStatus] = useState({
+    status: "",
+  });
 
   //get status init
   useEffect(() => {
@@ -20,19 +24,65 @@ const Beranda = ({ token, axiosJWT }) => {
         console.log(err);
       }
     };
-
     fetchStatus();
   }, []);
+
+  //get status by id init
+  const fetchStatusById = async () => {
+    try {
+      const res = await axiosJWT.get(`http://localhost:3001/status/` + userId, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setStatusPrivate(res.data.payload.datas);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  //post status
+  const onClickCreateStatus = async () => {
+    try {
+      const res = await axiosJWT.post(
+        "http://localhost:3001/status/" + userId,
+        postStatus,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success(res.data.payload.messege, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 4000);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="container py-2  mx-auto max-h-md  mt-14 ">
       <Tab.Group>
-        <div className="flex border border-t-gray-300 rounded-lg shadow-lg  mx-auto w-60 p-4">
+        <div className="flex border border-t-gray-300 rounded-lg shadow-lg bg-white mx-auto w-60 p-4">
           <Tab.List className="flex space-x-2 p-1  mx-auto">
-            <Tab className="w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-gray-700 bg-gray-100 hover:bg-gray-200 px-5 focus:outline-none focus:ring-0 ui-selected:bg-gray-400 ui-selected:text-white">
+            <Tab className="w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-gray-700 bg-gray-200 hover:bg-gray-300 px-5 focus:outline-none focus:ring-0 ui-selected:bg-gray-400 ui-selected:text-white">
               Beranda
             </Tab>
-            <Tab className="w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-gray-700 bg-gray-100 hover:bg-gray-200 px-5 focus:outline-none focus:ring-0 ui-selected:bg-gray-400 ui-selected:text-white">
+            <Tab
+              onClick={() => fetchStatusById()}
+              className="w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-gray-700 bg-gray-200 hover:bg-gray-300 px-5 focus:outline-none focus:ring-0 ui-selected:bg-gray-400 ui-selected:text-white"
+            >
               My status
             </Tab>
           </Tab.List>
@@ -40,13 +90,18 @@ const Beranda = ({ token, axiosJWT }) => {
         <div className="w-full">
           <Tab.Panels>
             <Tab.Panel>
-              <div className="container mx-auto my-3 p-5 ">
+              <div className="container mx-auto my-3 p-5 min-h-screen">
                 <StatusCard status={status} />
               </div>
             </Tab.Panel>
             <Tab.Panel>
               <div className="container mx-auto my-3 p-5 ">
-                <h1 className="text-4xl text-gray-300">my status</h1>
+                <MyStatus
+                  username={username}
+                  status={StatusPrivate}
+                  setPostStatus={setPostStatus}
+                  onClickCreateStatus={onClickCreateStatus}
+                />
               </div>
             </Tab.Panel>
           </Tab.Panels>
