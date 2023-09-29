@@ -16,8 +16,8 @@ const StatusCard = ({ status }) => {
             <div className="flex bg-white h-16 ">
               <img
                 src="./img/profil.png"
-                alt="frofil"
-                className="rounded-r-full w-20 object-cover"
+                alt="profil"
+                className="rounded-r-full w-20 h-16 object-cover"
               />
               <div className="flex flex-col my-auto">
                 <h1

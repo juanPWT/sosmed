@@ -27,3 +27,7 @@ export const basicSchemaSignIn = yup.object().shape({
     .min(8, "password it should  min 8 character")
     .required(),
 });
+
+export const schemaForEditUserProfil = yup.object().shape({
+  email: yup.string().email("please insert valid email"),
+});

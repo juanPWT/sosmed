@@ -133,22 +133,55 @@ export const update = async (req, res) => {
 
   const { username, email } = req.body;
   if (!username && !email)
-    return response(404, null, "attributes required!!", res);
+    return response(406, null, "no accepted for update data", res);
 
   try {
-    const user = await Users.update(
-      { username: username, email: email },
-      {
-        where: {
-          id: userId,
+    if (username && email === "") {
+      const user = await Users.update(
+        { username: username },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      const res2 = {
+        statusQuery: user,
+      };
+
+      response(200, res2, "success update username", res);
+    } else if (email && username === "") {
+      const user = await Users.update(
+        { email: email },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      const res2 = {
+        statusQuery: user,
+      };
+
+      response(200, res2, "success update email", res);
+    } else {
+      const user = await Users.update(
+        {
+          email: email,
+          username: username,
         },
-      }
-    );
-    if (!user) return response(500, null, "failed to update user!!", res);
-    const res2 = {
-      statusQuery: user,
-    };
-    response(200, res2, "success update users", res);
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      const res2 = {
+        statusQuery: user,
+      };
+
+      response(200, res2, "success update email and username", res);
+    }
   } catch (error) {
     response(500, null, "server failed !! cant update user", res);
   }

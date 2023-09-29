@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Tab } from "@headlessui/react";
 import StatusCard from "./component/StatusCard";
 import MyStatus from "./MyStatus";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import DynamicLoading from "./component/DynamicLoading";
 
 const Beranda = ({ token, axiosJWT, username, userId, toast }) => {
   const [status, setStatus] = useState([]);
@@ -9,6 +12,7 @@ const Beranda = ({ token, axiosJWT, username, userId, toast }) => {
   const [postStatus, setPostStatus] = useState({
     status: "",
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   //get status init
   useEffect(() => {
@@ -20,6 +24,7 @@ const Beranda = ({ token, axiosJWT, username, userId, toast }) => {
           },
         });
         setStatus(res.data.payload.datas);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -91,6 +96,7 @@ const Beranda = ({ token, axiosJWT, username, userId, toast }) => {
           <Tab.Panels>
             <Tab.Panel>
               <div className="container mx-auto my-3 p-5 min-h-screen">
+                {isLoading && <DynamicLoading card={8} />}
                 <StatusCard status={status} />
               </div>
             </Tab.Panel>

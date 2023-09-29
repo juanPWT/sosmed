@@ -1,7 +1,15 @@
 import React from "react";
 import ModalProfil from "./ModalProfil";
 
-const UserInfo = ({ username, fetchDataUser, dataUser }) => {
+const UserInfo = ({
+  profil,
+  fetchDataUser,
+  dataUser,
+  token,
+  userId,
+  axiosJWT,
+  toast,
+}) => {
   return (
     <>
       <div className="w-full flex flex-col  h-full static ">
@@ -10,7 +18,7 @@ const UserInfo = ({ username, fetchDataUser, dataUser }) => {
           alt="sampul"
           className="w-full h-[400px] object-cover shadow-xl"
         />
-        <div className="absolute hidden xl:flex top-[400px] right-[790px]">
+        <div className="absolute hidden xl:flex top-[400px] right-[850px]">
           <img
             src="./img/profil.png"
             alt="profil"
@@ -18,8 +26,11 @@ const UserInfo = ({ username, fetchDataUser, dataUser }) => {
           />
         </div>
         <div className="hidden  h-40 xl:flex w-full  justify-end ">
-          <div className="h-20 w-60  my-auto mx-40">
-            <h1 className="font-semibold text-3xl">{username}</h1>
+          <div className="flex flex-col gap-2 h-20 w-60  my-auto mx-40">
+            <h1 className="font-semibold text-3xl">{profil.username}</h1>
+            <span className="text-gray-400 text-base font-semibold">
+              {profil.email}
+            </span>
           </div>
           <div className="h-20 w-60  my-auto mx-5">
             <button
@@ -37,7 +48,13 @@ const UserInfo = ({ username, fetchDataUser, dataUser }) => {
         </div>
       </div>
       <dialog id="modalProfil" className="modal">
-        <ModalProfil dataUser={dataUser} />
+        <ModalProfil
+          dataUser={dataUser}
+          token={token}
+          axiosJWT={axiosJWT}
+          userId={userId}
+          toast={toast}
+        />
       </dialog>
     </>
   );

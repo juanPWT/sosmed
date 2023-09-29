@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserInfo from "./component/UserInfo";
 
-const ConUser = ({ username, token, userId, axiosJWT }) => {
+const ConUser = ({ profil, token, userId, axiosJWT, toast }) => {
   const [dataUser, setDataUser] = useState({
     username: "",
     email: "",
@@ -30,9 +30,13 @@ const ConUser = ({ username, token, userId, axiosJWT }) => {
         <div className="hidden xl:flex h-[600px] w-[230px] bg-white my-10 ml-5 mr-2 rounded-lg shadow-lg"></div>
         <div className="h-[600px] w-[1000px] bg-white my-10 mx-auto rounded-lg shadow-lg overflow-hidden">
           <UserInfo
-            username={username}
+            profil={profil}
             fetchDataUser={fetchDataUser}
             dataUser={dataUser}
+            token={token}
+            userId={userId}
+            axiosJWT={axiosJWT}
+            toast={toast}
           />
         </div>
       </div>

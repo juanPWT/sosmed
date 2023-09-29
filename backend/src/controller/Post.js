@@ -39,6 +39,7 @@ export const getStatusByUserId = async (req, res) => {
         userId: userId,
       },
       include: Users,
+      order: [["createdAt", "DESC"]],
     });
     response(200, post, "success GET data by user id ", res);
   } catch (error) {
@@ -50,6 +51,7 @@ export const getAllStatus = async (req, res) => {
   try {
     const post = await Post.findAll({
       include: Users,
+      order: [["createdAt", "DESC"]],
     });
     response(200, post, "suscces get all data status!!!", res);
   } catch (err) {

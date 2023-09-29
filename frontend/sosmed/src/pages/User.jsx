@@ -5,6 +5,7 @@ import Footer from "../component/Footer";
 import jwt from "jwt-decode";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const User = () => {
   const [token, setToken] = useState("");
@@ -67,16 +68,18 @@ const User = () => {
 
   return (
     <>
+      <ToastContainer />
       <div className="flex flex-col min-h-screen">
         <div className="fixed top-0 z-50">
           <Navbar username={profil.username} />
         </div>
         <div className="mt-5 z-0">
           <ConUser
-            username={profil.username}
+            profil={profil}
             token={token}
             userId={profil.userId}
             axiosJWT={axiosJWT}
+            toast={toast}
           />
         </div>
         <div className="mt-auto">
