@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import ConUser from "../component/user_setting/conUser";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import jwt from "jwt-decode";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import ConUser from "../component/user_setting/ConUser";
 
 const User = () => {
   const [token, setToken] = useState("");
@@ -13,6 +13,7 @@ const User = () => {
     userId: "",
     username: "",
     email: "",
+    urlImg: "",
   });
   const [exp, setExp] = useState(0);
 
@@ -27,6 +28,7 @@ const User = () => {
         userId: decode.userId,
         username: decode.username,
         email: decode.email,
+        urlImg: decode.urlImg,
       });
       setExp(decode.exp);
     } catch (error) {
@@ -56,6 +58,7 @@ const User = () => {
           userId: decode.userId,
           username: decode.username,
           email: decode.email,
+          urlImg: decode.urlImg,
         });
         setExp(decode.exp);
       }
@@ -71,7 +74,7 @@ const User = () => {
       <ToastContainer />
       <div className="flex flex-col min-h-screen">
         <div className="fixed top-0 z-50">
-          <Navbar username={profil.username} />
+          <Navbar profil={profil} />
         </div>
         <div className="mt-5 z-0">
           <ConUser

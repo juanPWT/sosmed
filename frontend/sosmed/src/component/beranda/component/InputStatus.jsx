@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 
-const InputStatus = ({ username, setPostStatus, onClickCreateStatus }) => {
+const InputStatus = ({ profil, setPostStatus, onClickCreateStatus }) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [emojiVisible, setEmojiVisible] = useState(false);
   const [text, setText] = useState("");
@@ -24,16 +24,16 @@ const InputStatus = ({ username, setPostStatus, onClickCreateStatus }) => {
       <div className="flex flex-row w-[300px] sm:w-[400px] md:w-[600px] h-24 sm:h-28 bg-gray-200 rounded-lg my-2 mx-auto shadow-lg">
         <div className="m-auto flex gap-2">
           <img
-            src="./img/profil.png"
+            src={profil.urlImg}
             alt="profil"
-            className="w-10 h-10 md:w-14 md:h-14 rounded-full cursor-pointer  "
+            className="w-10 h-10 md:w-14 md:h-14 rounded-full cursor-pointer object-cover  "
           />
           <div
             className="w-[170px] md:w-[300px] md:h-14 bg-white rounded-full flex break-words  p-2 cursor-pointer hover:bg-gray-300"
             onClick={() => document.getElementById("status_modal").showModal()}
           >
             <span className="m-auto text-[10px]  md:text-[14px] ">
-              What do you think now, {username} ?
+              What do you think now, {profil.username} ?
             </span>
           </div>
         </div>
@@ -89,7 +89,7 @@ const InputStatus = ({ username, setPostStatus, onClickCreateStatus }) => {
         </div>
         <div
           className={
-            emojiVisible ? "block absolute md:top-5 md:right-14" : "hidden"
+            emojiVisible ? "block absolute md:top-5 md:right-16" : "hidden"
           }
         >
           <Picker

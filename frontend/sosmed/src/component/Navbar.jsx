@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Navbar = ({ username }) => {
+const Navbar = ({ profil }) => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -18,7 +18,7 @@ const Navbar = ({ username }) => {
     <>
       <div className="navbar bg-base-100 fixed shadow-md">
         <div className="flex-1">
-          {username ? (
+          {profil.username ? (
             <a
               onClick={() => navigate("/home")}
               className="btn btn-ghost normal-case text-xl"
@@ -35,7 +35,7 @@ const Navbar = ({ username }) => {
           )}
         </div>
         <div className="flex-none">
-          {username ? (
+          {profil.username ? (
             <>
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -114,7 +114,7 @@ const Navbar = ({ username }) => {
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 rounded-full">
-                    <img src="./img/profil.png" />
+                    <img src={profil.urlImg} />
                   </div>
                 </label>
                 <ul
@@ -123,7 +123,7 @@ const Navbar = ({ username }) => {
                 >
                   <li onClick={() => navigate("/user")}>
                     <a className="justify-between">
-                      {username}
+                      {profil.username}
                       <div className="badge badge-accent">online</div>
                     </a>
                   </li>

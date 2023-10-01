@@ -15,6 +15,7 @@ function Home() {
     userId: "",
     username: "",
     email: "",
+    urlImg: "",
   });
   const [exp, setExp] = useState(0);
 
@@ -29,6 +30,7 @@ function Home() {
         userId: decode.userId,
         username: decode.username,
         email: decode.email,
+        urlImg: decode.urlImg,
       });
       setExp(decode.exp);
     } catch (err) {
@@ -53,11 +55,11 @@ function Home() {
         config.headers.Authorization = `Bearer ${res.data.payload.datas.accessTokken}`;
         setToken(res.data.payload.datas.accessTokken);
         const decode = jwt(res.data.payload.datas.accessTokken);
-
         setProfil({
           userId: decode.userId,
           username: decode.username,
           email: decode.email,
+          urlImg: decode.urlImg,
         });
         setExp(decode.exp);
       }
@@ -73,14 +75,14 @@ function Home() {
       <ToastContainer />
       <div className="flex flex-col min-h-screen ">
         <div className="fixed top-0 z-50">
-          <Navbar username={profil.username} />
+          <Navbar profil={profil} />
         </div>
 
         <div className="mt-5 z-0">
           <Beranda
             token={token}
             axiosJWT={axiosJWT}
-            username={profil.username}
+            profil={profil}
             userId={profil.userId}
             toast={toast}
           />

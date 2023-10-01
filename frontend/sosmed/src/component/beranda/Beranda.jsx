@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Tab } from "@headlessui/react";
 import StatusCard from "./component/StatusCard";
 import MyStatus from "./MyStatus";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import DynamicLoading from "./component/DynamicLoading";
 
-const Beranda = ({ token, axiosJWT, username, userId, toast }) => {
+const Beranda = ({ token, axiosJWT, profil, userId, toast }) => {
   const [status, setStatus] = useState([]);
   const [StatusPrivate, setStatusPrivate] = useState([]);
   const [postStatus, setPostStatus] = useState({
@@ -41,6 +40,7 @@ const Beranda = ({ token, axiosJWT, username, userId, toast }) => {
         },
       });
       setStatusPrivate(res.data.payload.datas);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -103,10 +103,11 @@ const Beranda = ({ token, axiosJWT, username, userId, toast }) => {
             <Tab.Panel>
               <div className="container mx-auto my-3 p-5 ">
                 <MyStatus
-                  username={username}
+                  profil={profil}
                   status={StatusPrivate}
                   setPostStatus={setPostStatus}
                   onClickCreateStatus={onClickCreateStatus}
+                  isLoading={isLoading}
                 />
               </div>
             </Tab.Panel>

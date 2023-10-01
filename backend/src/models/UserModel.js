@@ -18,6 +18,10 @@ const Users = db.define(
     refresh_token: {
       type: DataTypes.TEXT,
     },
+    profil_picture: {
+      type: DataTypes.STRING,
+      defaultValue: "defaultProfil.jpg",
+    },
   },
   {
     freezeTableName: true,

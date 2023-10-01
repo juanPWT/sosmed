@@ -5,7 +5,7 @@ const StatusCard = ({ status }) => {
     <div className="">
       {status.map((data) => {
         const formatDate = dayjs(data.createdAt).format(
-          "(dddd) DD MMMM YYYY HH:mm a"
+          "(dddd) DD MMMM YYYY HH:mm "
         );
 
         return (
@@ -15,7 +15,7 @@ const StatusCard = ({ status }) => {
           >
             <div className="flex bg-white h-16 ">
               <img
-                src="./img/profil.png"
+                src={`http://localhost:3001/ImgProfil/${data.user.profil_picture}`}
                 alt="profil"
                 className="rounded-r-full w-20 h-16 object-cover"
               />

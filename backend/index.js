@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
+import path from "path";
+const __dirname = path.resolve();
 
 // init for app
 const app = express();
@@ -25,6 +27,7 @@ try {
 // response;
 app.use(cookieParser());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 
 //io init

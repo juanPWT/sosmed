@@ -5,6 +5,7 @@ const ConUser = ({ profil, token, userId, axiosJWT, toast }) => {
   const [dataUser, setDataUser] = useState({
     username: "",
     email: "",
+    urlImg: "",
   });
 
   const fetchDataUser = async () => {
@@ -16,8 +17,9 @@ const ConUser = ({ profil, token, userId, axiosJWT, toast }) => {
       });
       const data = res.data.payload.datas;
       setDataUser({
-        username: data.username,
-        email: data.email,
+        username: data.data.username,
+        email: data.data.email,
+        urlImg: data.urlImg,
       });
     } catch (err) {
       console.log(err);

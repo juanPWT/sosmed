@@ -18,6 +18,9 @@ const Post = db.define(
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    status_picture: {
+      type: DataTypes.STRING,
+    },
   },
   {
     freezeTableName: true,

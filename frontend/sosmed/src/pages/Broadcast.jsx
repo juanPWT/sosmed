@@ -9,6 +9,7 @@ const Broadcast = () => {
   const [token, setToken] = useState("");
   const [profil, setProfil] = useState({
     username: "",
+    urlImg: "",
   });
 
   useEffect(() => {
@@ -17,7 +18,7 @@ const Broadcast = () => {
         const res = await axios.get("http://localhost:3001/users/token");
         setToken(res.data.payload.datas.acccessTokken);
         const decode = jwtDecode(res.data.payload.datas.accessTokken);
-        setProfil({ username: decode.username });
+        setProfil({ username: decode.username, urlImg: decode.urlImg });
       } catch (err) {}
     };
     fetchData();
@@ -27,7 +28,7 @@ const Broadcast = () => {
     <>
       <div className="flex flex-col min-h-screen justify-between">
         <div className="fixed top-0 z-50">
-          <Navbar username={profil.username} />
+          <Navbar profil={profil} />
         </div>
         <div className="z-0">
           <ConBroadcast />

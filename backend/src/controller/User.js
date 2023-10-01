@@ -3,6 +3,9 @@ import response from "../utils/response.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+//import middleware
+import uploadProfil from "../middleware/imgUploadProfil.js";
+
 //redy
 export const getUsers = async (req, res) => {
   try {
@@ -53,15 +56,17 @@ export const login = async (req, res) => {
     const userId = users[0].id;
     const username = users[0].username;
     const email = users[0].email;
+    const profil_picture = users[0].profil_picture;
+    const urlImg = `http://localhost:3001/ImgProfil/${profil_picture}`;
     const accessToken = jwt.sign(
-      { userId, username, email },
+      { userId, username, email, urlImg },
       process.env.ACCESS_TOKEN_SECRET,
       {
         expiresIn: "20s",
       }
     );
     const refreshToken = jwt.sign(
-      { userId, username, email },
+      { userId, username, email, urlImg },
       process.env.REFRESH_TOKEN_SECRET,
       {
         expiresIn: "1d",
@@ -117,10 +122,19 @@ export const getUserById = async (req, res) => {
 
   try {
     const user = await Users.findByPk(userId, {
-      attributes: ["username", "email"],
+      attributes: ["username", "email", "profil_picture"],
     });
     if (user === null) return response(404, null, "user id ny found", res);
-    response(200, user, "success gets user by id", res);
+    let user2 = user.profil_picture;
+    if (user2) {
+      user2 = `http://localhost:3001/ImgProfil/${user2}`;
+    }
+    response(
+      200,
+      { data: user, urlImg: user2 },
+      "success gets user by id",
+      res
+    );
   } catch (error) {
     response(500, null, "server failed !!! get user by id", res);
   }
@@ -188,3 +202,35 @@ export const update = async (req, res) => {
 };
 
 //development
+export const updateImageProfil = async (req, res) => {
+  uploadProfil(req, res, async (err) => {
+    if (err)
+      return response(
+        500,
+        null,
+        "server failed cant update profil image ",
+        res
+      );
+
+    const { userId } = req.params;
+    const validate = await Users.findByPk(userId);
+    if (validate === null)
+      return response(404, null, "user id bot found!!", res);
+
+    const profil_picture = req.file ? req.file.filename : "defaultProfil.jpg";
+    try {
+      const user = await Users.update(
+        { profil_picture: profil_picture },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+
+      response(200, user, "success change profil image", res);
+    } catch (error) {
+      response(404, null, "file must be enter", res);
+    }
+  });
+};

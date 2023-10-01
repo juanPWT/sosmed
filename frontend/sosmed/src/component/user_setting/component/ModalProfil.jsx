@@ -94,7 +94,7 @@ const ModalProfil = ({ dataUser, token, userId, axiosJWT, toast }) => {
               disabled={validateSubmit}
               className={
                 !validateSubmit
-                  ? "bg-sky-400 text-white rounded-xl w-16 h-10 mt-5 hover:bg-sky-500"
+                  ? "bg-sky-400 text-white rounded-xl w-16 h-10 mt-5 hover:bg-sky-600"
                   : "bg-sky-400 text-white rounded-xl w-16 h-10 mt-5 opacity-30"
               }
             >
