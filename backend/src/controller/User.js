@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 //import middleware
-import uploadProfil from "../middleware/imgUploadProfil.js";
+import { imgUpload, imgUploadCover } from "../middleware/imgUploadProfil.js";
 
 //redy
 export const getUsers = async (req, res) => {
@@ -57,16 +57,21 @@ export const login = async (req, res) => {
     const username = users[0].username;
     const email = users[0].email;
     const profil_picture = users[0].profil_picture;
+    const cover = users[0].cover;
+
+    //url image
     const urlImg = `http://localhost:3001/ImgProfil/${profil_picture}`;
+    const urlImgCover = `http://localhost:3001/ImgCover/${cover}`;
+
     const accessToken = jwt.sign(
-      { userId, username, email, urlImg },
+      { userId, username, email, urlImg, urlImgCover },
       process.env.ACCESS_TOKEN_SECRET,
       {
         expiresIn: "20s",
       }
     );
     const refreshToken = jwt.sign(
-      { userId, username, email, urlImg },
+      { userId, username, email, urlImg, urlImgCover },
       process.env.REFRESH_TOKEN_SECRET,
       {
         expiresIn: "1d",
@@ -122,12 +127,15 @@ export const getUserById = async (req, res) => {
 
   try {
     const user = await Users.findByPk(userId, {
-      attributes: ["username", "email", "profil_picture"],
+      attributes: ["username", "email", "profil_picture", "cover"],
     });
     if (user === null) return response(404, null, "user id ny found", res);
-    let user2 = user.profil_picture;
+    let user2 = { urlProfil: user.profil_picture, urlCover: user.cover };
     if (user2) {
-      user2 = `http://localhost:3001/ImgProfil/${user2}`;
+      user2 = {
+        urlCover: `http://localhost:3001/ImgCover/${user2.urlCover}`,
+        urlProfil: `http://localhost:3001/ImgProfil/${user2.urlProfil}`,
+      };
     }
     response(
       200,
@@ -201,36 +209,67 @@ export const update = async (req, res) => {
   }
 };
 
-//development
 export const updateImageProfil = async (req, res) => {
-  uploadProfil(req, res, async (err) => {
-    if (err)
-      return response(
-        500,
-        null,
-        "server failed cant update profil image ",
-        res
-      );
+  const { userId } = req.params;
+  const validate = await Users.findByPk(userId);
+  if (validate === null) {
+    return response(404, null, "user id bot found!!", res);
+  } else {
+    imgUpload(req, res, async (err) => {
+      if (err)
+        return response(
+          500,
+          null,
+          "server failed cant update profil image ",
+          res
+        );
 
-    const { userId } = req.params;
-    const validate = await Users.findByPk(userId);
-    if (validate === null)
-      return response(404, null, "user id bot found!!", res);
+      const profil_picture = req.file ? req.file.filename : "defaultProfil.jpg";
+      try {
+        const user = await Users.update(
+          { profil_picture: profil_picture },
+          {
+            where: {
+              id: userId,
+            },
+          }
+        );
 
-    const profil_picture = req.file ? req.file.filename : "defaultProfil.jpg";
-    try {
-      const user = await Users.update(
-        { profil_picture: profil_picture },
-        {
-          where: {
-            id: userId,
-          },
-        }
-      );
+        response(200, user, "success change profil image", res);
+      } catch (error) {
+        response(404, null, "file must be enter", res);
+      }
+    });
+  }
+};
 
-      response(200, user, "success change profil image", res);
-    } catch (error) {
-      response(404, null, "file must be enter", res);
-    }
-  });
+//development
+
+export const updateImageCover = async (req, res) => {
+  const { userId } = req.params;
+  const validate = await Users.findByPk(userId);
+  if (validate === null) {
+    return response(404, null, "user id bot found!!", res);
+  } else {
+    imgUploadCover(req, res, async (err) => {
+      if (err) {
+        response(500, null, "server failed", res);
+      }
+      const cover = req.file ? req.file.filename : "defaultCover.png";
+
+      try {
+        const user = await Users.update(
+          { cover: cover },
+          {
+            where: {
+              id: userId,
+            },
+          }
+        );
+        response(200, user, "success edit cover image ", res);
+      } catch (error) {
+        console.log("error cover", error);
+      }
+    });
+  }
 };

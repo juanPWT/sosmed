@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import UserInfo from "./component/UserInfo";
 
-const ConUser = ({ profil, token, userId, axiosJWT, toast }) => {
+const ConUser = ({ profil, token, userId, axiosJWT, toast, isLoading }) => {
   const [dataUser, setDataUser] = useState({
     username: "",
     email: "",
     urlImg: "",
+    urlImgCover: "",
   });
 
   const fetchDataUser = async () => {
@@ -19,7 +20,8 @@ const ConUser = ({ profil, token, userId, axiosJWT, toast }) => {
       setDataUser({
         username: data.data.username,
         email: data.data.email,
-        urlImg: data.urlImg,
+        urlImg: data.urlImg.urlProfil,
+        urlImgCover: data.urlImg.urlCover,
       });
     } catch (err) {
       console.log(err);
@@ -39,6 +41,7 @@ const ConUser = ({ profil, token, userId, axiosJWT, toast }) => {
             userId={userId}
             axiosJWT={axiosJWT}
             toast={toast}
+            isLoading={isLoading}
           />
         </div>
       </div>

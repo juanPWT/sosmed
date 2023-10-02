@@ -14,8 +14,10 @@ const User = () => {
     username: "",
     email: "",
     urlImg: "",
+    urlImgCover: "",
   });
   const [exp, setExp] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -29,8 +31,10 @@ const User = () => {
         username: decode.username,
         email: decode.email,
         urlImg: decode.urlImg,
+        urlImgCover: decode.urlImgCover,
       });
       setExp(decode.exp);
+      setIsLoading(false);
     } catch (error) {
       if (error) {
         navigate("/auth");
@@ -59,6 +63,7 @@ const User = () => {
           username: decode.username,
           email: decode.email,
           urlImg: decode.urlImg,
+          urlImgCover: decode.urlImgCover,
         });
         setExp(decode.exp);
       }
@@ -83,6 +88,7 @@ const User = () => {
             userId={profil.userId}
             axiosJWT={axiosJWT}
             toast={toast}
+            isLoading={isLoading}
           />
         </div>
         <div className="mt-auto">

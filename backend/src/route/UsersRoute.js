@@ -7,6 +7,7 @@ import {
   getUserById,
   update,
   updateImageProfil,
+  updateImageCover,
 } from "../controller/User.js";
 import { tokenRefresh } from "../controller/RefreshToken.js";
 import { verifyLogin } from "../middleware/tokenVerify.js";
@@ -21,5 +22,6 @@ route.delete("/logout", logout);
 route.get("/:userId", verifyLogin, getUserById);
 route.patch("/:userId", verifyLogin, update);
 route.patch("/img/profil/:userId", verifyLogin, updateImageProfil);
+route.patch("/img/profil/cover/:userId", verifyLogin, updateImageCover);
 
 export default route;

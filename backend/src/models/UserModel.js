@@ -22,6 +22,10 @@ const Users = db.define(
       type: DataTypes.STRING,
       defaultValue: "defaultProfil.jpg",
     },
+    cover: {
+      type: DataTypes.STRING,
+      defaultValue: "defaultCover.png",
+    },
   },
   {
     freezeTableName: true,

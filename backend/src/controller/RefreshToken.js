@@ -29,10 +29,12 @@ export const tokenRefresh = async (req, res) => {
         const username = users[0].username;
         const email = users[0].email;
         const profil_picture = users[0].profil_picture;
+        const cover = users[0].cover;
         const urlImg = `http://localhost:3001/ImgProfil/${profil_picture}`;
+        const urlImgCover = `http://localhost:3001/ImgCover/${cover}`;
 
         const accessTokken = jwt.sign(
-          { userId, username, email, urlImg },
+          { userId, username, email, urlImg, urlImgCover },
           process.env.ACCESS_TOKEN_SECRET,
           {
             expiresIn: "15s",

@@ -1,6 +1,7 @@
-import React from "react";
 import ModalProfil from "./ModalProfil";
 import ImgModal from "./ImgModal";
+import ImgCoverModal from "./ImgCoverModal";
+import Skelaton from "react-loading-skeleton";
 
 const UserInfo = ({
   profil,
@@ -10,26 +11,65 @@ const UserInfo = ({
   userId,
   axiosJWT,
   toast,
+  isLoading,
 }) => {
   const openModalEditImg = () => {
     document.getElementById("imgModal").showModal();
+  };
+  const openModalEditImgCover = () => {
+    document.getElementById("imgModalCover").showModal();
   };
 
   return (
     <>
       <div className="w-full flex flex-col  h-full static ">
-        <img
-          src="./img/sampul.png"
-          alt="sampul"
-          className="w-full h-[400px] object-cover shadow-xl"
-        />
+        <div className="relative group">
+          {isLoading ? (
+            <Skelaton className="w-full h-[400px] object-cover shadow-xl cursor-pointer" />
+          ) : (
+            <img
+              src={profil.urlImgCover}
+              alt="sampul"
+              className="w-full h-[400px] object-cover shadow-xl cursor-pointer"
+            />
+          )}
+          <button
+            onClick={openModalEditImgCover}
+            className="hidden absolute top-0 left-0 right-0 bottom-0 bg-blue-500 text-white p-2 text-xl font-semibold rounded group-hover:bg-gray-500/50  group-hover:block  m-auto"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-10 h-10 m-auto"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+              />
+            </svg>
+            Edit
+          </button>
+        </div>
         <div className="absolute rounded-full overflow-hidden xl:flex top-[400px] right-[770px] hover:outline hover:outline-4 hover:outline-white group">
           <div className="relative">
-            <img
-              src={profil.urlImg}
-              alt="profil"
-              className="h-60 w-60 bg-white  object-cover cursor-pointer"
-            />
+            {isLoading ? (
+              <Skelaton className="h-60 w-60   object-cover cursor-pointer" />
+            ) : (
+              <img
+                src={profil.urlImg}
+                alt="profil"
+                className="h-60 w-60 bg-white  object-cover cursor-pointer"
+              />
+            )}
             <button
               onClick={openModalEditImg}
               className="hidden absolute top-0 left-0 right-0 bottom-0 bg-blue-500 text-white p-2 text-xl font-semibold rounded group-hover:bg-gray-500/30  group-hover:block  m-auto"
@@ -92,6 +132,15 @@ const UserInfo = ({
       <dialog id="imgModal" className="modal">
         <ImgModal
           img={profil.urlImg}
+          axiosJWT={axiosJWT}
+          token={token}
+          userId={userId}
+          toast={toast}
+        />
+      </dialog>
+      <dialog id="imgModalCover" className="modal">
+        <ImgCoverModal
+          img={profil.urlImgCover}
           axiosJWT={axiosJWT}
           token={token}
           userId={userId}
