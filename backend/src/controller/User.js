@@ -243,8 +243,6 @@ export const updateImageProfil = async (req, res) => {
   }
 };
 
-//development
-
 export const updateImageCover = async (req, res) => {
   const { userId } = req.params;
   const validate = await Users.findByPk(userId);
@@ -273,3 +271,5 @@ export const updateImageCover = async (req, res) => {
     });
   }
 };
+
+//development

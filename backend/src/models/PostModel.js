@@ -14,12 +14,12 @@ const Post = db.define(
     status: {
       type: DataTypes.TEXT,
     },
+    status_picture: {
+      type: DataTypes.STRING,
+    },
     like: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
-    },
-    status_picture: {
-      type: DataTypes.STRING,
     },
   },
   {

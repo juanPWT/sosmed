@@ -9,6 +9,7 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import path from "path";
+import Like from "./src/models/LikeModel.js";
 const __dirname = path.resolve();
 
 // init for app
