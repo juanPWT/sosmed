@@ -8,6 +8,7 @@ const MyStatus = ({
   setPostStatus,
   onClickCreateStatus,
   isLoading,
+  handleClickLike,
 }) => {
   return (
     <>
@@ -22,7 +23,7 @@ const MyStatus = ({
           </div>
           <div className="mt-5">
             {isLoading && <DynamicLoading card={8} />}
-            <StatusCard status={status} />
+            <StatusCard status={status} handleClickLike={handleClickLike} />
           </div>
         </div>
       </div>

@@ -1,6 +1,9 @@
 import dayjs from "dayjs";
+import { useState } from "react";
 
-const StatusCard = ({ status }) => {
+const StatusCard = ({ status, handleClickLike }) => {
+  const [likeEffect, setLikeEffect] = useState(false);
+
   return (
     <div className="">
       {status.map((data) => {
@@ -51,14 +54,21 @@ const StatusCard = ({ status }) => {
               <p className="text-xl md:text-2xl">{data.status}</p>
             </div>
             <div className="flex  mx-5 my-2   md:my-10  relative">
-              <a className="cursor-pointer">
+              <button
+                onClick={() => {
+                  handleClickLike(data.id);
+                  setLikeEffect(true);
+                }}
+                disabled={likeEffect}
+                className={`${likeEffect && "animate-wiggle "} cursor-pointer `}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
+                  fill={likeEffect ? `#FF3F3F` : `none`}
                   viewBox="0 0 24 24"
-                  strokeWidth={1.5}
+                  strokeWidth={likeEffect ? 0 : 1.5}
                   stroke="currentColor"
-                  className="w-8 h-8"
+                  className="w-8 h-8 "
                 >
                   <path
                     strokeLinecap="round"
@@ -66,7 +76,10 @@ const StatusCard = ({ status }) => {
                     d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
                   />
                 </svg>
-              </a>
+              </button>
+              <span className="text-xl mx-2 font-semibold text-gray-400">
+                {data.like === 0 ? "" : data.like}
+              </span>
               <a className="absolute right-1 cursor-pointer sm:hidden">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

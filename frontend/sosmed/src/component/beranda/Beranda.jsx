@@ -76,6 +76,23 @@ const Beranda = ({ token, axiosJWT, profil, userId, toast }) => {
     }
   };
 
+  //like status
+  const handleClickLike = async (id) => {
+    try {
+      const req = await axiosJWT.post(
+        `http://localhost:3001/status/like/${userId}?p=${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err.response.data.payload);
+    }
+  };
+
   return (
     <div className="container py-2  mx-auto max-h-md  mt-14 ">
       <Tab.Group>
@@ -97,7 +114,7 @@ const Beranda = ({ token, axiosJWT, profil, userId, toast }) => {
             <Tab.Panel>
               <div className="container mx-auto my-3 p-5 min-h-screen">
                 {isLoading && <DynamicLoading card={8} />}
-                <StatusCard status={status} />
+                <StatusCard status={status} handleClickLike={handleClickLike} />
               </div>
             </Tab.Panel>
             <Tab.Panel>
@@ -108,6 +125,7 @@ const Beranda = ({ token, axiosJWT, profil, userId, toast }) => {
                   setPostStatus={setPostStatus}
                   onClickCreateStatus={onClickCreateStatus}
                   isLoading={isLoading}
+                  handleClickLike={handleClickLike}
                 />
               </div>
             </Tab.Panel>
